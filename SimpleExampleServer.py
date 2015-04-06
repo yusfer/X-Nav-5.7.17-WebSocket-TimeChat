@@ -15,11 +15,11 @@ logging.basicConfig(format='%(asctime)s %(message)s', level=logging.DEBUG)
 
 
 class SimpleEcho(WebSocket):
-<<<<<<< HEAD
+
     def handleMessage(self):
         if self.data is None:
             self.data = ''
-=======
+
 	def handleMessage(self):
 		if self.data is None:
 			self.data = ''
@@ -28,8 +28,7 @@ class SimpleEcho(WebSocket):
 			self.sendMessage(str(self.data))
 		except Exception as n:
 			print n
->>>>>>> fd48f1535ba09260a550ee908e05307de3953950
-
+			
 	def handleConnected(self):
 		print self.address, 'connected'
 
@@ -39,25 +38,10 @@ class SimpleEcho(WebSocket):
 
 class SimpleChat(WebSocket):
 	
-<<<<<<< HEAD
     #print "segundos >>> " + str(time.localtime().tm_sec)
     #if (time.localtime().tm_sec == 0):
        # print "segundos >>> " + str(time.localtime().tm_sec)
-       
-       
-    def handleMessage(self):
-        if self.data is None:
-            self.data = ''
-        print "self.data >>>  " + "|" + str(self.data)+ "|"
-        if (str(self.data)=="getTime"):
-            self.sendMessage(str(time.ctime()))
-        else:
-=======
-	#print "segundos >>> " + str(time.localtime().tm_sec)
-	#if (time.localtime().tm_sec == 0):
-	   # print "segundos >>> " + str(time.localtime().tm_sec)
-	   
-	   
+
 	def handleMessage(self):
 		if self.data is None:
 			self.data = ''
@@ -65,7 +49,6 @@ class SimpleChat(WebSocket):
 		if (str(self.data)=="getTime"):
 			self.sendMessage(str(time.ctime()))
 		else:
->>>>>>> fd48f1535ba09260a550ee908e05307de3953950
 			for client in self.server.connections.itervalues():
 				if client != self:
 					try:
@@ -73,36 +56,9 @@ class SimpleChat(WebSocket):
 					except Exception as n:
 						print n
 						
-<<<<<<< HEAD
-    def handleTime(self):
-        print "JUSTO ENTRAR"
-        for client in self.server.connections.itervalues():
-				try:
-					print "DENTRO FOR"
-					client.sendMessage(str(self.address[0]) + ' - ' + str(str(time.ctime())))
-				except Exception as n:
-						print n
 
-    def handleConnected(self):
-        print self.address, 'connected'
-        for client in self.server.connections.itervalues():
-            if client != self:
-                try:
-                    client.sendMessage(str(self.address[0]) + ' - connected')
-                except Exception as n:
-                    print n
-
-    def handleClose(self):
-        print self.address, 'closed'
-        for client in self.server.connections.itervalues():
-            if client != self:
-                try:
-                    client.sendMessage(str(self.address[0]) + ' - disconnected')
-                except Exception as n:
-                    print n
-    
-=======
 	def handleTime(self):
+		print "JUSTO ENTRAR"
 		try:
 			print "DENTRO FOR"
 			self.sendMessage(str(self.address[0]) + ' - ' + str(str(time.ctime())))
@@ -126,8 +82,9 @@ class SimpleChat(WebSocket):
 					client.sendMessage(str(self.address[0]) + ' - disconnected')
 				except Exception as n:
 					print n
+
 	
->>>>>>> fd48f1535ba09260a550ee908e05307de3953950
+
 
 if __name__ == "__main__":
 

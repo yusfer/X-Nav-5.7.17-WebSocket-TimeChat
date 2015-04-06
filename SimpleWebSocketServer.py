@@ -516,15 +516,7 @@ class SimpleWebSocketServer(object):
 
     def serveforever(self):
         while True:
-<<<<<<< HEAD
-            for conn2 in self.connections.itervalues():
-                try:
-                    print "HOLACARACOLA"
-                    self.websocketclass.handleTime(self.websocketclass)
-                except Exception as n:
-                    print n
-=======
-			
+        
 			#este for para que cuando segundo en punto, mande mensaje
             print str(time.localtime().tm_sec)
             if (time.localtime().tm_sec == 0):
@@ -534,7 +526,6 @@ class SimpleWebSocketServer(object):
                         conn2.handleTime()	
                     except Exception as n:
                         print n
->>>>>>> fd48f1535ba09260a550ee908e05307de3953950
 
             rList, wList, xList = select(self.listeners, [], self.listeners, 1)
 
