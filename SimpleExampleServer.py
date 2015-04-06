@@ -7,6 +7,7 @@ import signal
 import sys
 import ssl
 import logging
+import time
 from SimpleWebSocketServer import WebSocket, SimpleWebSocketServer, SimpleSSLWebSocketServer
 from optparse import OptionParser
 
@@ -14,7 +15,6 @@ logging.basicConfig(format='%(asctime)s %(message)s', level=logging.DEBUG)
 
 
 class SimpleEcho(WebSocket):
-
     def handleMessage(self):
         if self.data is None:
             self.data = ''
@@ -32,17 +32,34 @@ class SimpleEcho(WebSocket):
 
 
 class SimpleChat(WebSocket):
-
+	
+    #print "segundos >>> " + str(time.localtime().tm_sec)
+    #if (time.localtime().tm_sec == 0):
+       # print "segundos >>> " + str(time.localtime().tm_sec)
+       
+       
     def handleMessage(self):
         if self.data is None:
             self.data = ''
-
+        print "self.data >>>  " + "|" + str(self.data)+ "|"
+        if (str(self.data)=="getTime"):
+            self.sendMessage(str(time.ctime()))
+        else:
+			for client in self.server.connections.itervalues():
+				if client != self:
+					try:
+						client.sendMessage(str(self.address[0]) + ' - ' + str(self.data))
+					except Exception as n:
+						print n
+						
+    def handleTime(self):
+        print "JUSTO ENTRAR"
         for client in self.server.connections.itervalues():
-            if client != self:
-                try:
-                    client.sendMessage(str(self.address[0]) + ' - ' + str(self.data))
-                except Exception as n:
-                    print n
+				try:
+					print "DENTRO FOR"
+					client.sendMessage(str(self.address[0]) + ' - ' + str(str(time.ctime())))
+				except Exception as n:
+						print n
 
     def handleConnected(self):
         print self.address, 'connected'
@@ -61,7 +78,7 @@ class SimpleChat(WebSocket):
                     client.sendMessage(str(self.address[0]) + ' - disconnected')
                 except Exception as n:
                     print n
-
+    
 
 if __name__ == "__main__":
 
